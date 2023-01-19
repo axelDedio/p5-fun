@@ -23,7 +23,7 @@ class Block {
   
   constructor(/** @type {p5} */p, /** @type {number} */i) {
     this.p = p;
-    this.x =  0;
+    this.x =  blockWhidth/2;
     this.i = i;
     this.y = blockWhidth + this.i * 8;
     this.time = 0;
@@ -35,28 +35,28 @@ class Block {
     }
   moveBlock(){
     this.x = tri(this.p.millis()/1000, border, basefreq*this.i);
-    if(this.x<2){
-      this.x = 0;
+    if(this.x<(blockWhidth/2)+2){
+      this.x = blockWhidth/2;
     } 
     if(this.x>border-2)  {
       this.x = border;
     }
   }
   colorBlock(){
-    this.p.fill(this.p.color("red"));
-    if(this.x<8){
-      this.p.fill(this.p.color("violet"));
-    } 
-    if(this.x>border-8)  {
-      this.p.fill(this.p.color("violet"));
-    }
+    let centerDis = this.p.dist(this.x,0,width/2,0)/(width/2);
+    console.log(255*centerDis)
+
+    
+      this.p.fill(this.p.color(102, 255, 102, 200*centerDis+50));
+      this.p.stroke(this.p.color(102, 255, 102, 200*centerDis+50));
+ 
   }
 
 joinBlocks(blocks) {
   blocks.forEach(element =>{
-    if(Math.abs(this.i - element.i) < 4){
-      this.p.stroke(this.p.color("red"));
-      this.p.strokeWeight(1.5)
+    if(Math.abs(this.i - element.i) < 3){
+      this.p.stroke(this.p.color(102, 255, 102, 50));
+      this.p.strokeWeight(1)
       this.p.line(this.x,this.y,element.x,element.y);
     } 
 
@@ -85,12 +85,6 @@ const sketch  = ( /** @type {p5} */p ) => {
       blocks[i].joinBlocks(blocks.slice(i));
       blocks[i].moveBlock();
     }
-    // for(let i = 0; i<border; i+=0.1){
-    //   p.stroke(p.color("red"));
-    //   p.strokeWeight(1)
-    //   console.log(i, tri(i));
-    //   p.point(i, (tri(i)+(height/2)));
-    // }
   };
 }
   let myp5 = new p5(sketch, document.querySelector('.centerbox'));
