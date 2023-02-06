@@ -3,8 +3,8 @@ import "p5/lib/addons/p5.sound"
 const element = document.querySelector(".centerbox");
 const style = window.getComputedStyle(element);
 const width = parseInt(style.width);
-console.log("width: ", width);
 const height = parseInt(style.height);
+console.log("width: ", width);
 
 const fr = 30;
 
