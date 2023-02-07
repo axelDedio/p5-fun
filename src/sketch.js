@@ -12,15 +12,26 @@ class Particle {
   
   constructor(/** @type {p5} */p, /** @type {number} */i) {
     this.p = p;
-    this.x = width/2;
-    this.y = height/2;
+    this.position = new p5.Vector(200, 200);
+    this.velocity = new p5.Vector(5, 4);
   }
   show(){
-    this.p.circle(this.x, this.y, 20, 20);
+    this.p.circle(this.position.x, this.position.y, 20, 20);
     this.p.fill(this.p.color("red"));
     }
   update(){
+    this.position.add(this.velocity);
    
+  }
+  bounce(){
+    if(this.position.x > width || this.position.x < 0) {
+      console.log("bounce")
+      this.velocity.x = -1 * this.velocity.x
+    }
+    if(this.position.y > height || this.position.y < 0) {
+      console.log("bounce")
+      this.velocity.y = -1 * this.velocity.y
+    }
   }
   colorBlock(){
   }
@@ -39,6 +50,7 @@ const sketch  = ( /** @type {p5} */p ) => {
     p.background(255)
     particle.show()
     particle.update()
+    particle.bounce()
   };
 }
 let myp5 = new p5(sketch, document.querySelector('.centerbox'));
