@@ -8,37 +8,59 @@ console.log("width: ", width);
 
 const fr = 30;
 
-class Particle {
-  
-  constructor(/** @type {p5} */p, /** @type {number} */i) {
-    this.p = p;
-    this.x = width/2;
-    this.y = height/2;
-  }
-  show(){
-    this.p.circle(this.x, this.y, 20, 20);
-    this.p.fill(this.p.color("red"));
-    }
-  update(){
-   
-  }
-  colorBlock(){
-  }
-}
+
 
 
 const sketch  = ( /** @type {p5} */p ) => {
-  const particle = new Particle(p, 1);
   p.setup = () => {
     p.createCanvas(width, height);
     p.background(255)
     p.frameRate(fr);
   };
   
+  
+    let start = 0;
+    let inc = 0.04;
+    
   p.draw = () => {
     p.background(255)
-    particle.show()
-    particle.update()
-  };
-}
+    p.stroke(100)
+    let xoff = start;
+
+    p.noFill();
+    p.beginShape(p.LINE);
+    p.vertex(0,height);
+    for(let i = 0; i < width+30; i = i + 15){
+      const y = p.map(p.noise(xoff),0,1,0,height)
+      p.vertex(i, y )
+      xoff+=inc
+    }
+    p.vertex(width,height);
+    p.endShape(p.CLOSE);
+
+
+    // p.fill(100);
+    p.beginShape(p.LINE);
+    p.vertex(0,height);
+    for(let i = 0; i < width+30; i = i + 15){
+      const y = p.map(p.noise(xoff),0,1,0,height)
+      p.vertex(i, y )
+      xoff+=inc
+    }
+    p.vertex(width,height);
+    p.endShape(p.CLOSE);
+
+    // p.fill(200);
+    p.beginShape(p.LINE);
+    p.vertex(0,height);
+    for(let i = 0; i < width+30; i = i + 15){
+      const y = p.map(p.noise(xoff),0,1,0,height)
+      p.vertex(i, y )
+      xoff+=inc
+    }
+    p.vertex(width,height);
+    p.endShape(p.CLOSE);
+    start+=inc
+  }
+};
 let myp5 = new p5(sketch, document.querySelector('.centerbox'));
