@@ -7,15 +7,16 @@ const width = parseInt(style.width);
 const height = parseInt(style.height);
 console.log("width: ", width);
 
-const fr = 30;
+console.log("height: ", height);
+
+const fr = 80;
 
 class Particle {
   
-  constructor(/** @type {p5} */p, /** @type {number} */x, y) {
+  constructor(/** @type {p5} */p, /** @type {number} */) {
     this.p = p;
-    this.position = new p5.Vector(x, y);
-    this.velocity = new p5.Vector(5, 4);
-    this.osc = new Oscillator();
+    this.position = new p5.Vector( p.random(30,300), p.random(30,300));
+    this.velocity = new p5.Vector(p.random(-10,10), p.random(-10,10));
  
   }
   show(){
@@ -31,14 +32,13 @@ class Particle {
       console.log("bounce")
       this.velocity.x = -1 * this.velocity.x
       const osc = new Oscillator();
-      osc.start(0, 1*100+300);
+      osc.start(0, (this.position.y/100)*100+100);
       osc.amp(0, 0.1)
     }
     if(this.position.y > height -10 || this.position.y < 10) {
-      console.log("bounce")
       this.velocity.y = -1 * this.velocity.y
       const osc = new Oscillator();
-      osc.start(0, 1*100+300);
+      osc.start(0, (this.position.x/100)*100+100);
       osc.amp(0, 0.1);
     }
   }
@@ -54,8 +54,8 @@ const sketch  = ( /** @type {p5} */p ) => {
     p.noStroke();
     p.background(255)
     p.frameRate(fr);
-    for(let i = 0;i<3;i++) {
-      particles.push(new Particle(p, i * 100 + 50, 200));
+    for(let i = 0;i<30;i++) {
+      particles.push(new Particle(p));
     }
   };
   

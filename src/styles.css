@@ -1,5 +1,4 @@
-﻿@container-width: 50vw;
-
+﻿
 body {
     margin: 0px;
 }
@@ -12,6 +11,6 @@ body {
     background-color: black;
 }
 .centerbox {
-    width: @container-width;
-    height: 80vh;
+    width: 90vw;
+    height: 90vh;
 }
