@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npx webpack --watch --mode development",
-    "serve": "live-server --watch='.\\dist\\'" 
+    "serve": "live-server --watch=\".\\dist\"" 
   },
   "author": "",
   "license": "ISC",
