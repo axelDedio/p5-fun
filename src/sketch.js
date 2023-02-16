@@ -5,63 +5,46 @@ const style = window.getComputedStyle(element);
 const width = parseInt(style.width);
 const height = parseInt(style.height);
 console.log("width: ", width);
+console.log("height: ", height);
 
-const fr = 50;
+const fr = 10;
 
-const mountains =  (/** @type {p5} */p, xoff, inc, ysum, color) => {
-    p.fill(p.color(color));
-    p.beginShape(p.LINE);
-    p.vertex(0,height);
-    for(let i = 0; i < width+30; i = i + 1){
-      const y = p.map(p.noise(xoff),0,1,0,80);
-      p.vertex(i, y + ysum[i] )
-      ysum[i]+=y;
-      xoff+=inc
-    }
-    p.vertex(width,height);
-    p.endShape(p.CLOSE);
-}
+
 
 
 const sketch  = ( /** @type {p5} */p ) => {
   p.setup = () => {
     p.createCanvas(width, height);
-    p.background(255)
+    p.background(255);
     p.frameRate(fr);
   };
   
-  
-    let start = 0;
-    let inc = 0.008;
+  let startY = 0;
+  let startX = 0;
+  let inc = 0.01;
     
   p.draw = () => {
-    p.background(255)
-    p.stroke(100)
-    let xoff = start;
-    const ysum = [];
-
-    p.fill(100);
-    p.beginShape(p.LINE);
-    p.vertex(0,height);
-    for(let i = 0; i < width+30; i = i + 1){
-      const y = p.map(p.noise(xoff),0,1,-200,200)
-      ysum.push(y);
-      p.vertex(i, y )
-      xoff+=inc
+  
+    p.loadPixels();
+    p.pixelDensity(1);
+    let yoff = startY;
+    for(let y = 0; y < height; y++){
+      let xoff = startX;
+      for(let x = 0; x < width; x++){ 
+        const index = (x + y * width) * 4;
+        const rd = p.abs(p.noise(xoff , yoff)) * 255;
+        p.pixels[index] = rd;
+        p.pixels[index + 1] = rd;
+        p.pixels[index + 2] = rd;
+        p.pixels[index + 3] = 255;
+        xoff+=inc;
+        }
+      
+      yoff+=inc;
     }
-    p.vertex(width,height);
-    p.endShape(p.CLOSE);
-
-
-    mountains(p, xoff, inc, ysum, "red");
-    mountains(p, xoff, inc, ysum, "green");
-    mountains(p, xoff, inc, ysum, "blue");
-    mountains(p, xoff, inc, ysum, "yellow");
-    mountains(p, xoff, inc, ysum, "green");
-    mountains(p, xoff, inc, ysum, "purple");
-    
- 
-    start+=inc
-  }
+    startX+=inc;
+    startY+=inc;
+    p.updatePixels()
+  };
 };
 let myp5 = new p5(sketch, document.querySelector('.centerbox'));
