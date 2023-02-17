@@ -1,4 +1,4 @@
-﻿import p5 from "p5";
+﻿import p5, {Oscillator} from "p5";
 import "p5/lib/addons/p5.sound"
 import { makeNoise2D, makeNoise3D } from "open-simplex-noise";
 
@@ -36,8 +36,10 @@ const sketch  = ( /** @type {p5} */p ) => {
   
   
     let start = 0;
-    let inc = 0.003;
-    
+    let inc = 0.01;
+    const osc = new Oscillator();
+    osc.start(0, 200);
+      osc.amp(0.3)
   p.draw = () => {
     p.background(255)
     p.stroke(100)
@@ -46,12 +48,14 @@ const sketch  = ( /** @type {p5} */p ) => {
     const ysum = [];
 
     p.fill(100);
+
     p.beginShape(p.LINE);
     p.vertex(0,height);
     for(let i = 0; i < width+30; i = i + 1){
-      const y = p.map(noise2D(xoff, yoff),-1,1,0,height);
-      ysum.push(y);
-      p.vertex(i, y )
+      const nois = noise2D(xoff, yoff);
+      ysum.push(p.map(nois,-1,1,0,height));
+      osc.freq(p.map(nois,-1,1,500,200))
+      p.vertex(i, p.map(nois,-1,1,0,height))
       xoff+=inc
       yoff+=inc
     }
