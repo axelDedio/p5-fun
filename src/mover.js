@@ -22,7 +22,14 @@ export default class Mover {
     }
 
     update() {
-        this.p.noStroke();
+        const mag = 1;
+        if (this.p.mouseIsPressed) {
+            let mouse = this.p.createVector(this.p.mouseX, this.p.mouseY);
+            let force = p5.Vector.sub(mouse, this.location);
+            force.setMag(mag);
+            this.applyForce(force);
+        }
+
         this.velocity.add(this.accell);
         this.velocity.limit(10);
         this.location.add(this.velocity);
