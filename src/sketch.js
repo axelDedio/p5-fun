@@ -10,7 +10,7 @@ const fr = 80;
 const gravity = 0.2;
 
 const sketch = (/** @type {p5} */ p) => {
-    const moverA = new Mover(p, 10, "red");
+    const moverA = new Mover(p, 8, "red");
     const moverB = new Mover(p, 15, "blue");
     const moverC = new Mover(p, 20, "green");
     const movers = [];
@@ -19,25 +19,25 @@ const sketch = (/** @type {p5} */ p) => {
     movers.push(moverC);
 
     p.setup = () => {
-        console.log("h");
-
         p.createCanvas(width, height);
+        p.background(0);
         p.frameRate(fr);
     };
 
     p.draw = () => {
         p.noStroke();
         p.createCanvas(width, height);
-        p.background(255);
+        p.background(0, 5);
         p.fill(p.color("grey"));
         p.rect(width / 2, 0, width / 2, height);
         for (let mover of movers) {
-            mover.display();
-            mover.drawVectors();
-            mover.handleDrag();
-            mover.update();
             mover.handleEdge();
             mover.applyForce(new p.createVector(0, gravity).mult(mover.mass));
+            mover.handleAttract();
+            // mover.handleDrag();
+            mover.drawVectors();
+            mover.update();
+            mover.display();
         }
     };
 };

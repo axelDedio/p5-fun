@@ -22,14 +22,6 @@ export default class Mover {
     }
 
     update() {
-        const mag = 1;
-        if (this.p.mouseIsPressed) {
-            let mouse = this.p.createVector(this.p.mouseX, this.p.mouseY);
-            let force = p5.Vector.sub(mouse, this.location);
-            force.setMag(mag);
-            this.applyForce(force);
-        }
-
         this.velocity.add(this.accell);
         this.velocity.limit(10);
         this.location.add(this.velocity);
@@ -39,6 +31,15 @@ export default class Mover {
     applyForce(/** @type {p5.Vector} */ force) {
         let f = p5.Vector.div(force, this.mass);
         this.accell.add(f);
+    }
+    handleAttract() {
+        const mag = 1;
+        if (this.p.mouseIsPressed) {
+            let mouse = this.p.createVector(this.p.mouseX, this.p.mouseY);
+            let force = p5.Vector.sub(mouse, this.location);
+            force.setMag(mag);
+            this.applyForce(force);
+        }
     }
     handleDrag() {
         if (this.location.x > width / 2) {
@@ -82,8 +83,9 @@ export default class Mover {
         this.p.line(
             this.location.x,
             this.location.y,
-            this.location.x + this.accell.x * 100,
-            this.location.y + this.accell.y * 100
+            this.location.x + this.accell.x * 300,
+            this.location.y + this.accell.y * 300
         );
+        this.p.noStroke();
     }
 }
