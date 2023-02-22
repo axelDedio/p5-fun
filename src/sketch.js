@@ -34,7 +34,7 @@ const sketch = (/** @type {p5} */ p) => {
             mover.handleEdge();
             mover.applyForce(new p.createVector(0, gravity).mult(mover.mass));
             mover.handleAttract();
-            // mover.handleDrag();
+            mover.handleDrag();
             mover.drawVectors();
             mover.update();
             mover.display();
