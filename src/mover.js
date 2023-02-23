@@ -32,25 +32,7 @@ export default class Mover {
         let f = p5.Vector.div(force, this.mass);
         this.accell.add(f);
     }
-    handleAttract() {
-        const mag = 1;
-        if (this.p.mouseIsPressed) {
-            let mouse = this.p.createVector(this.p.mouseX, this.p.mouseY);
-            let force = p5.Vector.sub(mouse, this.location);
-            force.setMag(mag);
-            this.applyForce(force);
-        }
-    }
-    handleDrag() {
-        if (this.location.x > width / 2) {
-            const direction = this.velocity.copy();
-            direction.normalize();
-            direction.mult(-1);
-            direction.mult(this.velocity.magSq());
-            direction.mult(0.3);
-            this.applyForce(direction);
-        }
-    }
+
     handleEdge() {
         if (this.location.x > width - this.r) {
             this.location.x = width - this.r;
@@ -68,24 +50,5 @@ export default class Mover {
             this.location.y = this.r;
             this.velocity.y *= -1;
         }
-    }
-    drawVectors() {
-        this.p.stroke(this.p.color("yellow"));
-
-        this.p.line(
-            this.location.x,
-            this.location.y,
-            this.location.x + this.velocity.x * 5,
-            this.location.y + this.velocity.y * 5
-        );
-        this.p.stroke(this.p.color("green"));
-
-        this.p.line(
-            this.location.x,
-            this.location.y,
-            this.location.x + this.accell.x * 300,
-            this.location.y + this.accell.y * 300
-        );
-        this.p.noStroke();
     }
 }

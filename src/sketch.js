@@ -27,14 +27,10 @@ const sketch = (/** @type {p5} */ p) => {
     p.draw = () => {
         p.noStroke();
         p.background(0, 50);
-        p.fill(0, 0, 200, 5);
-        p.rect(width / 2, 0, width / 2, height);
+
         for (let mover of movers) {
             mover.handleEdge();
-            mover.applyForce(new p.createVector(0, gravity).mult(mover.mass));
-            mover.handleAttract();
-            mover.handleDrag();
-            // mover.drawVectors();
+
             mover.update();
             mover.display();
         }
