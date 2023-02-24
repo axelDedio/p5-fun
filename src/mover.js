@@ -30,7 +30,7 @@ export default class Mover {
 
     update() {
         this.velocity.add(this.accell);
-        // this.velocity.limit(10);
+        // this.velocity.limit(30);
         this.location.add(this.velocity);
         this.accell.mult(0);
     }

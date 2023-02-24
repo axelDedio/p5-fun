@@ -34,8 +34,14 @@ const sketch = (/** @type {p5} */ p) => {
     );
 
     p.draw = () => {
-        p.background(0, 30);
+        p.background(0, 60);
         p.translate(width / 2, height / 2);
+        if (p.mouseIsPressed) {
+            sun.location = p.createVector(
+                p.mouseX - width / 2,
+                p.mouseY - height / 2
+            );
+        }
         sun.display();
         for (let mover of movers) {
             mover.calculateAttraction(sun);
@@ -45,7 +51,7 @@ const sketch = (/** @type {p5} */ p) => {
                     mover.calculateAttraction(other);
                 }
             }
-            mover.handleDrag(0.001);
+            mover.handleDrag(0.0001);
             mover.update();
             mover.display();
         }
