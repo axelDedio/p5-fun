@@ -4,7 +4,7 @@ const style = window.getComputedStyle(element);
 const width = parseInt(style.width);
 const height = parseInt(style.height);
 export const dims = { width, height };
-const G = 0.3;
+const G = 0.2;
 
 export default class Mover {
     constructor(

@@ -16,18 +16,18 @@ const sketch = (/** @type {p5} */ p) => {
         p.background(0);
         p.frameRate(fr);
     };
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 200; i++) {
         let start = p5.Vector.random2D();
         let initialVel = start.copy();
         initialVel.rotate(p.PI / 2);
-        start.setMag(p.random(100, 100));
-        initialVel.setMag(p.random(10, 15));
+        start.setMag(p.random(300, 300));
+        initialVel.setMag(p.random(10, 10));
         const mover = new Mover(p, 2, "white", start, initialVel);
         movers.push(mover);
     }
     const sun = new Mover(
         p,
-        210,
+        300,
         "yellow",
         p.createVector(0, 0),
         p.createVector(0, 0)
@@ -36,7 +36,7 @@ const sketch = (/** @type {p5} */ p) => {
     p.draw = () => {
         p.background(0, 30);
         p.translate(width / 2, height / 2);
-        // sun.display();
+        sun.display();
         for (let mover of movers) {
             mover.calculateAttraction(sun);
             // sun.calculateAttraction(mover);
