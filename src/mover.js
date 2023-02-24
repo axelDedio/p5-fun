@@ -4,7 +4,7 @@ const style = window.getComputedStyle(element);
 const width = parseInt(style.width);
 const height = parseInt(style.height);
 export const dims = { width, height };
-const G = 1;
+const G = 0.3;
 
 export default class Mover {
     constructor(
@@ -30,7 +30,7 @@ export default class Mover {
 
     update() {
         this.velocity.add(this.accell);
-        this.velocity.limit(10);
+        // this.velocity.limit(10);
         this.location.add(this.velocity);
         this.accell.mult(0);
     }
@@ -50,12 +50,12 @@ export default class Mover {
         this.accell.add(force);
     }
 
-    handleDrag() {
+    handleDrag(val) {
         const direction = this.velocity.copy();
         direction.normalize();
         direction.mult(-1);
         direction.mult(this.velocity.magSq());
-        direction.mult(0.001);
+        direction.mult(val);
         this.applyForce(direction);
     }
 
