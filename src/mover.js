@@ -4,26 +4,33 @@ const style = window.getComputedStyle(element);
 const width = parseInt(style.width);
 const height = parseInt(style.height);
 export const dims = { width, height };
-const G = 3;
+const G = 1;
 
 export default class Mover {
-    constructor(/** @type {p5} */ p, r, color, px, py, vx, vy) {
+    constructor(
+        /** @type {p5} */ p,
+        mass,
+        color,
+        /** @type {p5.Vector} */ start,
+        /** @type {p5.Vector} */ vel
+    ) {
         this.p = p;
-        this.r = r;
-        this.mass = 0.01 * (this.p.PI * this.p.sq(this.r));
-        /** @type {p5.Vector} */ this.location = new p.createVector(px, py);
-        /** @type {p5.Vector} */ this.velocity = new p.createVector(vx, vy);
+        this.mass = mass;
+        this.r = this.p.sqrt(mass) * 2;
+        /** @type {p5.Vector} */ this.location = start;
+        /** @type {p5.Vector} */ this.velocity = vel;
         /** @type {p5.Vector} */ this.accell = new p.createVector(0, 0);
         this.color = color;
     }
     display() {
         this.p.fill(this.p.color(this.color));
+        this.p.noStroke();
         this.p.ellipse(this.location.x, this.location.y, this.r * 2);
     }
 
     update() {
         this.velocity.add(this.accell);
-        this.velocity.limit(15);
+        this.velocity.limit(10);
         this.location.add(this.velocity);
         this.accell.mult(0);
     }
@@ -31,7 +38,7 @@ export default class Mover {
     calculateAttraction(object) {
         const attractorMass = object.mass;
         const dir = p5.Vector.sub(this.location, object.location).mult(-1);
-        const magSq = this.p.constrain(dir.magSq(), 5, 25);
+        const magSq = this.p.constrain(dir.magSq(), 100, 1000);
         const strength = (this.mass * attractorMass * G) / magSq;
         dir.normalize();
         dir.setMag(strength);

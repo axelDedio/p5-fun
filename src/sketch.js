@@ -7,46 +7,40 @@ console.log("width: ", width);
 console.log("height: ", height);
 
 const fr = 80;
-const iv = 50;
+const iv = 7;
 const sketch = (/** @type {p5} */ p) => {
-    const moverA = new Mover(p, 6, "red", width / 2, 100, iv, 0);
-    const moverB = new Mover(p, 6, "blue", width / 2, 300, -iv, 0);
-    const moverC = new Mover(p, 6, "blue", width / 2, 500, -iv, 0);
-    const moverD = new Mover(p, 6, "green", width / 2, 300, iv);
     const movers = [];
-    movers.push(moverA);
-    movers.push(moverB);
-    movers.push(moverC);
-    movers.push(moverD);
 
     p.setup = () => {
         p.createCanvas(width, height);
         p.background(0);
         p.frameRate(fr);
     };
+    for (let i = 0; i < 200; i++) {
+        let start = p5.Vector.random2D();
+        let initialVel = start.copy();
+        initialVel.rotate(p.PI / 2);
+        start.setMag(p.random(200, 300));
+        initialVel.setMag(p.random(5, 15));
+        const mover = new Mover(p, 2, "white", start, initialVel);
+        console.log(mover);
+        movers.push(mover);
+    }
+    console.log(movers);
 
     p.draw = () => {
-        p.noStroke();
-        p.background(0, 5);
-        p.fill(p.color("yellow"));
-        // sun.display();
-        // sun.update();
+        p.background(0, 20);
+        p.translate(width / 2, height / 2);
+
         for (let mover of movers) {
             for (let other of movers) {
                 if (other !== mover) {
                     mover.calculateAttraction(other);
-                    p.stroke(255);
-                    p.line(
-                        mover.location.x,
-                        mover.location.y,
-                        other.location.x,
-                        other.location.y
-                    );
                 }
             }
             // mover.handleDrag();
             mover.update();
-            // mover.display();
+            mover.display();
         }
     };
 };
