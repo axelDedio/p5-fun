@@ -25,7 +25,7 @@ const sketch = (/** @type {p5} */ p) => {
     movers.push(new YellowParticle(p));
     movers.push(new YellowParticle(p));
     p.draw = () => {
-        p.background(0, 60);
+        p.background(0, 200);
         for (let mover of movers) {
             for (let other of movers) {
                 if (other !== mover) {
