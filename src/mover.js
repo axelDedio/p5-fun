@@ -40,17 +40,21 @@ export default class Mover {
     }
 
     handleEdge() {
-        if (this.location.x > width) {
-            this.location.x = 0;
+        if (this.location.x > width - this.r) {
+            this.location.x = width - this.r;
+            this.velocity.x *= -1;
         }
-        if (this.location.x < 0) {
-            this.location.x = width;
+        if (this.location.x < this.r) {
+            this.location.x = this.r;
+            this.velocity.x *= -1;
         }
-        if (this.location.y > height) {
-            this.location.y = 0;
+        if (this.location.y > height - this.r) {
+            this.location.y = height - this.r;
+            this.velocity.y *= -1;
         }
-        if (this.location.y < 0) {
-            this.location.y = height;
+        if (this.location.y < this.r) {
+            this.location.y = this.r;
+            this.velocity.y *= -1;
         }
     }
 }
