@@ -1,12 +1,12 @@
-import p5 from "p5";
+﻿import p5 from "p5";
 import "p5/lib/addons/p5.sound";
 import { YellowParticle } from "./particle";
 import { width, height } from "./helper";
 
 const fr = 60;
 export const eq = (x) => {
-    const y = p5.prototype.pow(50 / x, 9) - p5.prototype.pow(50 / x, 2);
-    return 20 * y;
+    const y = p5.prototype.pow(50 / x, 3) - p5.prototype.pow(50 / x, 2);
+    return 40 * y;
 };
 const sketch = (/** @type {p5} */ p) => {
     const movers = [];
@@ -16,12 +16,12 @@ const sketch = (/** @type {p5} */ p) => {
         p.background(0);
         p.frameRate(fr);
     };
-    for (let x = 1; x < 150; x++) {
+    for (let x = 1; x < 50; x++) {
         movers.push(new YellowParticle(p));
     }
 
     p.draw = () => {
-        p.background(0, 200);
+        p.background(0, 100);
         for (let mover of movers) {
             for (let other of movers) {
                 if (other !== mover) {
@@ -39,11 +39,11 @@ const sketch = (/** @type {p5} */ p) => {
         p.translate(0, height / 2);
         p.strokeWeight(2);
         p.stroke(255, 255, 255);
-        // for (let x = 1; x < width; x++) {
-        //     p.point(x, eq(x));
-        //     p.point(x, 0);
-        //     p.point(10, x);
-        // }
+        for (let x = 1; x < width; x++) {
+            p.point(x, eq(x));
+            p.point(x, 0);
+            p.point(10, x);
+        }
     };
 };
 
