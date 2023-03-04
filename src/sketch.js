@@ -1,49 +1,33 @@
 ﻿import p5 from "p5";
 import "p5/lib/addons/p5.sound";
 import { width, height } from "./helper";
-import { Rocket } from "./rocket";
-import { WindParticle } from "./windparticle";
 
 const fr = 60;
 
 const sketch = (/** @type {p5} */ p) => {
-    const movers = [];
-
     p.setup = () => {
         p.createCanvas(width, height);
         p.background(0);
         p.frameRate(fr);
     };
-    const spacecraft = new Rocket(p);
-    const windParticles = [];
-    for (let i = 0; i < 100; i++) {
-        windParticles.push(new WindParticle(p, p.random(1, 3)));
-    }
-    let offsetX = 0;
-    let offsetY = 10;
-    let inc = 0.003;
-    const gravity = 0.1;
+    const r = height / 4;
     p.draw = () => {
         p.background(0);
-        spacecraft.display();
-        spacecraft.update();
-        spacecraft.applyForce(p.createVector(0, gravity).mult(spacecraft.mass));
-        spacecraft.applyForce(
-            p.createVector(p.map(p.noise(offsetX), 0, 1, -0.1, 0.1), 0)
-        );
-        spacecraft.handleEdge();
-        windParticles.forEach((wp) => {
-            wp.display();
-            wp.velocity.x = p.map(p.noise(offsetX), 0, 1, -20, 20);
-            wp.update();
-            wp.handleEdge();
-            wp.velocity.y = p.map(p.noise(offsetY), 0, 1, -1, 1);
-        });
-        p.noStroke();
-        p.rect(width / 2 - 30, height - 20, 60, 50);
-        p.rect(0, height - 11, width, 20);
-        offsetX += inc;
-        offsetY += inc;
+        p.push();
+        p.translate(width / 2, height / 2);
+        p.rotate(-p.PI / 2);
+        p.noFill();
+        p.stroke(255);
+        let sides = 3000;
+        let amp = p.map(p.mouseX, 0, width, 2, 200);
+        p.beginShape();
+        for (let a = 0, i = 0; a < p.TAU, i < sides; a += p.TAU / sides, i++) {
+            let vex = p.createVector(p.cos(a), p.sin(a));
+            vex.setMag(r).add(p.sin(a * amp) * 20);
+            p.vertex(vex.x, vex.y);
+        }
+        p.endShape("close");
+        p.pop();
     };
 };
 
