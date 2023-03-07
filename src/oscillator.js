@@ -14,7 +14,7 @@ export class Oscillator {
             this.amplitude
         );
     }
-    update(inc = 0.01) {
+    update(inc = 0.1) {
         this.phase += inc / this.period;
     }
 }
