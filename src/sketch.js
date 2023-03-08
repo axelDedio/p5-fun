@@ -26,13 +26,14 @@ const sketch = (/** @type {p5} */ p) => {
         p.noFill();
         p.stroke(p.color("white"));
 
-        for (let i = 1; i < 100; i++) {
+        for (let i = 0; i < 70; i++) {
             p.beginShape();
             for (let phi = 0; phi < p.TAU; phi += 0.1) {
-                let r = i;
+                let r = 3 * i;
                 let x = p.sin(phi) * r;
                 let y = p.cos(phi) * r;
-                let z = p.cos(roff + i * (p.TAU / 50)) * 50;
+                let z = p.cos(roff + i * (p.TAU / 70)) * ((70 - i) * 2);
+                p.stroke(255 - z * 4, 0, 255);
                 p.vertex(x, y, z);
             }
             p.endShape("close");
