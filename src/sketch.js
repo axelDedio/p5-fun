@@ -1,13 +1,19 @@
 ﻿import p5 from "p5";
 // import "p5/lib/addons/p5.sound";
-import { FunnyMover } from "./funnyMover";
 // import { width, height } from "./helper";
-import { Oscillator } from "./oscillator";
+
+let capturer = new CCapture({
+    format: "gif",
+    workersPath: "../output/",
+    framerate: 60,
+    verbose: true,
+});
 
 const width = 500;
 const height = 500;
 const fr = 60;
 let slider;
+let canv;
 const sketch = (/** @type {p5} */ p) => {
     p.setup = () => {
         p.createCanvas(width, height, p.WEBGL);
@@ -18,8 +24,12 @@ const sketch = (/** @type {p5} */ p) => {
     let roff = 0;
     let off = 0;
     p.draw = () => {
+        if (p.frameCount == 1) {
+            capturer.start();
+        }
         p.background(0);
-        p.rotateX(slider.value());
+        p.rotateX(p.PI / 3);
+        // p.rotateX(slider.value());
         // p.rotateZ(-p.PI / 1.5);
         // p.rotateY(-p.PI / 4);
 
@@ -39,7 +49,12 @@ const sketch = (/** @type {p5} */ p) => {
             p.endShape("close");
         }
         roff += 0.02;
-        // off -= 0.001;
+        if (p.frameCount < 60 * 10) {
+            capturer.capture(document.getElementsByTagName("canvas")[0]);
+        } else if (p.frameCount == 60 * 10) {
+            capturer.stop();
+            capturer.save();
+        }
     };
 };
 

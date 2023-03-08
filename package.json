@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "@types/p5": "^1.4.3",
+    "ccapture.js": "^1.1.0",
     "open-simplex-noise": "^2.5.0",
     "p5": "^1.5.0"
   },
