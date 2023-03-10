@@ -8,13 +8,13 @@ export default class NoiseGenerator {
         this.dimX = dimX;
         this.dimY = dimY;
         this.nvs = [];
-        this.zInc = 0.02;
-        this.inc = 0.05;
+        this.zInc = 0.01;
+        this.inc = 0.01;
         this.zoff = 0;
         this.update();
     }
     getNoise(x, y) {
-        return this.p.map(this.nvs[y][x], -1, 1, 0, 60);
+        return this.p.map(this.nvs[y][x], -1, 1, 0, 90);
     }
 
     update() {
