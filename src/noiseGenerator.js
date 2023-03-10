@@ -9,7 +9,7 @@ export default class NoiseGenerator {
         this.dimY = dimY;
         this.nvs = [];
         this.zInc = 0.01;
-        this.inc = 0.01;
+        this.inc = 0.07;
         this.zoff = 0;
         this.update();
     }
