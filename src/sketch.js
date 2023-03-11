@@ -10,13 +10,11 @@ const sketch = (/** @type {p5} */ p) => {
         p.createCanvas(width, height, p.WEBGL);
         p.background(0);
         p.frameRate(fr);
-        slider = p.createSlider(0, p.PI / 2, 0, 0.01);
+        slider = p.createSlider(0, p.PI / 2, p.PI / 2, 0.01);
     };
 
     // const noiseGen = new NoiseGenerator(p, 200, 200);
-    const waveGen = new WaveGenerator(p, 1, 0, 80);
-    const waveGen2 = new WaveGenerator(p, 1, 0, 20);
-    const waveGen3 = new WaveGenerator(p, 1, 0, 10);
+    const waveGen = new WaveGenerator(p, 1, 40, 160);
     p.draw = () => {
         p.background(0);
         p.rotateX(slider.value());
@@ -35,9 +33,7 @@ const sketch = (/** @type {p5} */ p) => {
             }
         }
 
-        waveGen.update(1);
-        waveGen2.update(-1);
-        waveGen3.update(-1);
+        waveGen.update(50);
         if (p.frameCount % 120 == 0) {
             console.log(p.frameRate());
         }
