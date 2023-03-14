@@ -17,7 +17,7 @@ const sketch = (/** @type {p5} */ p) => {
         p.createCanvas(width, height);
         p.background(255);
         p.frameRate(fr);
-        sliderInc = p.createSlider(0.0001, 0.8, 0.14, 0.0001);
+        sliderInc = p.createSlider(0.0001, 0.8, 0.2, 0.0001);
         frp = p.createP("");
         for (let i = 0; i < 3000; i++) {
             particles.push(new Particle(p));
@@ -49,7 +49,7 @@ const sketch = (/** @type {p5} */ p) => {
                 p.round(particle.location.y / boxSize)
             );
             let force = p5.Vector.fromAngle(ni);
-            force.mult(3);
+            force.mult(2);
             particle.applyForce(force);
         });
 
