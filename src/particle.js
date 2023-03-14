@@ -11,18 +11,17 @@ export default class Particle {
         );
         /** @type {p5.Vector} */ this.velocity = p.createVector(0, 0);
         /** @type {p5.Vector} */ this.accell = p.createVector(0, 0);
-        this.color = p.color(
-            p.map(this.location.y, 0, height, 0, 255),
-            p.random(255),
-            p.map(this.location.x, 0, width, 0, 255),
-            20
-        );
+        this.h = 0;
     }
     display() {
         this.p.push();
-        this.p.stroke(this.color);
-        this.p.strokeWeight(4);
-        this.p.strokeJoin("MITER");
+        this.p.colorMode(this.p.HSB);
+        this.p.stroke(this.h, 255, 255, 0.05);
+        this.h++;
+        if (this.h > 360) {
+            this.h = 0;
+        }
+        this.p.strokeWeight(3);
         this.p.line(
             this.location.x,
             this.location.y,
