@@ -13,13 +13,20 @@ export default class Particle {
         /** @type {p5.Vector} */ this.accell = p.createVector(0, 0);
     }
     display() {
-        this.p.fill(this.p.color("black"));
-        this.p.ellipse(this.location.x, this.location.y, 3);
+        this.p.stroke(0, 2);
+        this.p.strokeWeight(3);
+        this.p.line(
+            this.location.x,
+            this.location.y,
+            this.prevLoc.x,
+            this.prevLoc.y
+        );
     }
 
     update() {
         this.velocity.add(this.accell);
         this.velocity.limit(5);
+        this.prevLoc = this.location.copy();
         this.location.add(this.velocity);
         this.accell.mult(0);
     }

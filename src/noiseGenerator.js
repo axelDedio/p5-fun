@@ -11,7 +11,6 @@ export default class NoiseGenerator {
         this.boxSize = boxSize;
         this.nvs = [];
         this.zInc = 0.007;
-        this.inc = 0.1;
         this.zoff = 0;
         this.update();
     }

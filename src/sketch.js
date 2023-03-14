@@ -8,38 +8,40 @@ const fr = 60;
 let slider;
 let sliderInc;
 const particles = [];
-
+let frp;
 const sketch = (/** @type {p5} */ p) => {
-    const noiseGen = new NoiseGenerator(p, 20);
     const boxSize = 20;
+    const noiseGen = new NoiseGenerator(p, boxSize);
 
     p.setup = () => {
         p.createCanvas(width, height);
-        p.background(0);
+        p.background(255);
         p.frameRate(fr);
-        sliderInc = p.createSlider(0.0001, 0.4, 0.07, 0.0001);
-
-        for (let i = 0; i < 500; i++) {
+        sliderInc = p.createSlider(0.0001, 0.8, 0.14, 0.0001);
+        frp = p.createP("");
+        for (let i = 0; i < 3000; i++) {
             particles.push(new Particle(p));
         }
     };
     const mapNoise = (x, y) => {
-        return p.map(noiseGen.getNoise(x, y), -1, 1, -p.PI, p.PI);
+        return p.map(noiseGen.getNoise(x, y), -1, 1, 0, p.TAU * 2);
     };
     p.draw = () => {
-        p.background(255);
+        // p.background(255, 2);
 
-        for (let y = 0; y < height / boxSize; y++) {
-            for (let x = 0; x < width / boxSize; x++) {
-                let nv = mapNoise(x, y);
-                p.push();
-                p.translate(x * boxSize, y * boxSize);
-                p.rotate(nv);
-                p.line(0, 0, boxSize, 0);
-                p.pop();
-            }
-        }
+        // for (let y = 0; y < height / boxSize; y++) {
+        //     for (let x = 0; x < width / boxSize; x++) {
+        //         let nv = mapNoise(x, y);
+        //         p.push();
+        //         p.translate(x * boxSize, y * boxSize);
+        //         p.rotate(nv);
+        //         p.strokeWeight(0.1);
+        //         p.line(0, 0, boxSize, 0);
+        //         p.pop();
+        //     }
+        // }
         particles.forEach((particle) => {
+            particle.update();
             particle.display();
             particle.handleEdge();
             let ni = mapNoise(
@@ -47,14 +49,13 @@ const sketch = (/** @type {p5} */ p) => {
                 p.round(particle.location.y / boxSize)
             );
             let force = p5.Vector.fromAngle(ni);
-            force.mult(20);
+            force.mult(3);
             particle.applyForce(force);
-            particle.update();
         });
 
         noiseGen.update(sliderInc.value());
-        if (p.frameCount % 120 == 0) {
-            console.log(p.frameRate());
+        if (p.frameCount % 10 == 0) {
+            frp.html(`${p.floor(p.frameRate())}, ${sliderInc.value()}`);
         }
     };
 };
