@@ -17,7 +17,7 @@ const sketch = (/** @type {p5} */ p) => {
     };
     p.draw = () => {
         theShader.setUniform("u_resolution", [width, height]);
-        theShader.setUniform("mouseX", p.map(p.mouseX, 0, width, 0, 1));
+        theShader.setUniform("u_time", p.frameCount / 100);
         theShader.setUniform("mouseY", p.map(p.mouseY, 0, width, 0, 1));
         p.rect(1000, 1000, 10, 10);
         if (p.frameCount % 10 == 0) {
